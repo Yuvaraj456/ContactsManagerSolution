@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <LINK href="~/StyleSheet.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" asp-fallback-test="window.Jquery" asp-fallback-src="~/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js" asp-fallback-test="window.Jquery.validator" asp-fallback-src="~/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/4.0.0/jquery.validate.unobtrusive.min.js" asp-fallback-test="window.Jquery.Validator.unobtrusive" asp-fallback-src="~/jquery.validate.unobtrusive.min.js"></script>
+
+</head>
+<body>
+    <div class="container " style="background-color:whitesmoke">
+        <div class="page-content ">
+           <div class="margin-bottom">
+               <div class="flex" id="top-bar-div">
+                   <div class="flex-1" id="app-title-div">
+                       <h1 class="app-title">
+                           <i class="fa-solid fa-people-simple"></i>
+                           Contact Manager
+                       </h1>
+                   </div>
+                   <div class="flex-1 pr" id="search-box-div">
+                        <div class="navbar account-links">
+
+                            <ul>
+                                <li>
+                                    <a asp-controller="Account" asp-action="Register">Register</a>
+                                    <a asp-action="Account" asp-controller="Login">Login</a>
+                                </li>
+                            </ul>
+
+                        </div>
+                   </div>
+               </div>
+
+           </div>
+            <div class="navbar mb">
+
+                <ul>
+                    <li>
+                        <a asp-controller="Persons" asp-action="Index">Persons</a>
+                        <a asp-action="UploadFromExcel" asp-controller="Countries">Upload Countries</a>
+                    </li>
+                </ul>
+
+            </div>
+        
+        <div class="body">
+            @RenderBody()
+        </div>
+    </div>
+    </div>
+</body>
+</html>

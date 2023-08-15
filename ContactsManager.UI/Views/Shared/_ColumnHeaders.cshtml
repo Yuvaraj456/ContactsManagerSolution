@@ -1,0 +1,23 @@
+﻿
+
+
+@if (ViewBag.CurrentsortBy == ViewBag.ColumnName && ViewBag.CurrentsortOrder == nameof(SortOrderoptions.ASC))
+{
+    <th>
+        <a href="~/persons/index?searchBy=@(ViewBag.CurrentSearchBy)&searchString=@(ViewBag.CurrentSearchString)&sortBy=@(ViewBag.ColumnName)&sortOrder=@(nameof(SortOrderoptions.DESC))">@(ViewBag.DisplayName)</a>
+        <i class="fa-solid fa-sort-up "></i>
+    </th>
+}
+else if (@ViewBag.CurrentsortBy == @ViewBag.ColumnName && @ViewBag.CurrentsortOrder == nameof(SortOrderoptions.DESC))
+{
+    <th>
+        <a href="~/persons/index?searchBy=@(ViewBag.CurrentSearchBy)&searchString=@(ViewBag.CurrentSearchString)&sortBy=@(ViewBag.ColumnName)&sortOrder=@(nameof(SortOrderoptions.ASC))">@(ViewBag.DisplayName)</a>
+        <i class="fa-solid fa-sort-down "></i>
+    </th>
+}
+else
+{
+    <th>
+        <a href="~/persons/index?searchBy=@(ViewBag.CurrentSearchBy)&searchString=@(ViewBag.CurrentSearchString)&sortBy=@(ViewBag.ColumnName)&sortOrder=@(nameof(SortOrderoptions.DESC))">@(ViewBag.DisplayName)</a>
+    </th>
+}
