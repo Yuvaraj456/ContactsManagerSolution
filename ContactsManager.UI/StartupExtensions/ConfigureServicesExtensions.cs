@@ -1,5 +1,9 @@
-﻿using CRUDExample.Filters.ActionFilters;
+﻿using ContactsManager.Core.Domain.IdentityEntities;
+using CRUDExample.Filters.ActionFilters;
 using Entities;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Repositories;
 using RepositoryContracts;
@@ -61,7 +65,33 @@ namespace CRUDExample.StartupExtensions
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")).EnableSensitiveDataLogging();
             });
 
+            //enable identity in this project
+            service.AddIdentity<ApplicationUser,ApplicationRole>(options =>
+            {
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireLowercase = true;
+                options.Password.RequiredLength = 5;
+                options.Password.RequiredUniqueChars = 3; //eg: AB23AB - here unique character is 4 is acceptable as per this line
+                options.Password.RequireDigit =false;
+            })
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders() //otp for forget password
+                .AddUserStore<UserStore<ApplicationUser, ApplicationRole, ApplicationDbContext, Guid>>()
+                .AddRoleStore<RoleStore<ApplicationRole, ApplicationDbContext, Guid>>();
 
+            service.AddAuthorization(options =>
+            {
+                options.FallbackPolicy = new AuthorizationPolicyBuilder()
+                                          .RequireAuthenticatedUser()
+                                            .Build(); //enforces authorization policy(user must be authenticated) for all the action methods
+            });
+
+            service.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/Account/Login"; //if user is not loggedin then redirect to this page
+
+            });
 
             //Data Source=(localdb)\ProjectModels;Initial Catalog=PersonsDatabase;Integrated Security=True;
             //Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;

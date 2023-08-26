@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Diagnostics;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CRUDExample.Controllers
 {
-    [Route("[controller]")]
+    [Route("/[controller]")]
+    [AllowAnonymous] //Allow unauthorized users also
     public class HomeController : Controller
     {
         [Route("/[action]")]

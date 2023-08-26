@@ -48,8 +48,10 @@ Rotativa.AspNetCore.RotativaConfiguration.Setup("wwwroot", wkhtmltopdfRelativePa
 app.UseHttpLogging();
 app.UseStaticFiles();
 
-app.UseRouting();
-app.MapControllers();
+app.UseRouting(); //Identtifying action method based route
+app.UseAuthentication(); //reading identity cookie eg: login and logout
+app.UseAuthorization(); //Validates access permissions of the user
+app.MapControllers();//Execute the filter pipeline (action + filters)
 
 app.Run();
 

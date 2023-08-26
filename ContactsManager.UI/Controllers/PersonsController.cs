@@ -15,7 +15,7 @@ using ServiceContracts.Enums;
 namespace CRUDExample.Controllers
 {
 
-    [Route("[Controller]")]    
+    [Route("/[Controller]")]    
     [ResponseHeaderFilterFactory("MyKeyController", "MyValueController", 3)]
     //[TypeFilter(typeof(HandleExceptionFilter))]
     public class PersonsController : Controller
