@@ -4,7 +4,7 @@ using ServiceContracts;
 
 namespace CRUDExample.Controllers
 {
-    [Route("/[Controller]")]
+    [Route("[controller]")]
     public class CountriesController : Controller
     {
         private readonly ICountriesService _countriesservice;

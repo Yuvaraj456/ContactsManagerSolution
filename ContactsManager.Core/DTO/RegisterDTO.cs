@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using ContactsManager.Core.Enums;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -19,6 +21,7 @@ namespace ContactsManager.Core.DTO
         [StringLength(50)]
         [EmailAddress(ErrorMessage ="Please enter valid email address")]
         [DataType(DataType.EmailAddress)]
+        [Remote(action: "IsEmailAlreadyRegistered", controller: "Account", ErrorMessage ="Email is already exist")] //async request to validate isalready exit email address
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Phone Number Cannot be blank")]      
@@ -36,6 +39,8 @@ namespace ContactsManager.Core.DTO
         [StringLength(100)]
         [DataType(DataType.Password)]
         [Compare("Password")]
-        public string ConfirmPassword { get; set; }     
+        public string ConfirmPassword { get; set; }
+
+        public UsertypeOptions UserType { get; set; } = UsertypeOptions.User;
     }
 }

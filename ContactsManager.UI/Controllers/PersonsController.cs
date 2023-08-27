@@ -15,7 +15,7 @@ using ServiceContracts.Enums;
 namespace CRUDExample.Controllers
 {
 
-    [Route("/[Controller]")]    
+    [Route("[controller]")]    
     [ResponseHeaderFilterFactory("MyKeyController", "MyValueController", 3)]
     //[TypeFilter(typeof(HandleExceptionFilter))]
     public class PersonsController : Controller
@@ -43,7 +43,7 @@ namespace CRUDExample.Controllers
         }
 
 
-        [Route("[Action]")]
+        [Route("[action]")]
         [Route("/")]
         [TypeFilter(typeof(PersonsListActionFilter),Order =4)]
       
@@ -85,7 +85,7 @@ namespace CRUDExample.Controllers
         }
 
         //Executes when the user clicks on "Create Person" hyperlink(While opening the create view)
-        [Route("[Action]")]
+        [Route("[action]")]
         [HttpGet]     
         [ResponseHeaderFilterFactory("MyKeyAction", "MyValueAction", 4)]
         public async Task<IActionResult> Create()
@@ -99,7 +99,7 @@ namespace CRUDExample.Controllers
 
 
         //Executes when the user clicks on "Submit" button(after submission of create form)
-        [Route("[Action]")]
+        [Route("[action]")]
         [HttpPost]
         [TypeFilter(typeof(PersonCreateAndEditPostActionFilter))]
         [TypeFilter(typeof(FeatureDisabledResourceFilter), Arguments = new object[] {false})]
@@ -198,7 +198,7 @@ namespace CRUDExample.Controllers
             return RedirectToAction("Index");
         }
 
-        [Route("[Action]")]
+        [Route("[action]")]
         public async Task<IActionResult> GeneratePDF()
         {
             //get list of persons
@@ -212,7 +212,7 @@ namespace CRUDExample.Controllers
             };
         }
 
-        [Route("[Action]")]
+        [Route("[action]")]
         public async Task<IActionResult> GenerateCSV()
         {
             MemoryStream memoryStream = await _personsGetterService.GetAllPersonsCSV();
@@ -220,7 +220,7 @@ namespace CRUDExample.Controllers
             return File(memoryStream, "application/octet-stream", "persons.csv");
         }
 
-        [Route("[Action]")]
+        [Route("[action]")]
         public async Task<IActionResult> GenerateExcel()
         {
             MemoryStream memoryStream = await _personsGetterService.GetPersonsExcel();

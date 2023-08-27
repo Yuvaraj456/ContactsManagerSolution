@@ -36,6 +36,8 @@ else
     app.UseExceptionHandlingMiddleware();
 }
 
+app.UseHsts();
+app.UseHttpsRedirection();
 app.Logger.LogDebug("Debug-message");
 app.Logger.LogWarning("Warning-message");
 app.Logger.LogInformation("Information-message");
@@ -52,6 +54,23 @@ app.UseRouting(); //Identtifying action method based route
 app.UseAuthentication(); //reading identity cookie eg: login and logout
 app.UseAuthorization(); //Validates access permissions of the user
 app.MapControllers();//Execute the filter pipeline (action + filters)
+
+app.UseEndpoints(options =>
+{
+    //conventional routing for areas
+    options.MapControllerRoute(
+        name: "areas",
+        pattern: "{area:exists}/{controller=Home}/{action=Index}"
+
+        );//Admin/Home/Index/
+
+    //conventional routing, if we apply attribute route in controller then this code is overrided by Route Attribute
+    options.MapControllerRoute(
+        name: "default",
+        pattern: "{controller}/{action}/{id?}"
+ 
+        );
+});
 
 app.Run();
 

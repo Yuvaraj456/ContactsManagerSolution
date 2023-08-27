@@ -4,6 +4,7 @@ using Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Repositories;
 using RepositoryContracts;
@@ -40,6 +41,8 @@ namespace CRUDExample.StartupExtensions
 
                 //Adding Global filter with Arguments
                 options.Filters.Add(new ResponseHeaderActionFilter(logger) { _key = "MyKeyGlobal", _value = "MyValueGlobal", Order = 2 });
+
+                options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute()); //this will add AntiforgeryToken for form get request as well and this will enough no need to mention in every action method "[ValidateAntiforgerytoken]".
 
             });
 
@@ -85,6 +88,13 @@ namespace CRUDExample.StartupExtensions
                 options.FallbackPolicy = new AuthorizationPolicyBuilder()
                                           .RequireAuthenticatedUser()
                                             .Build(); //enforces authorization policy(user must be authenticated) for all the action methods
+                options.AddPolicy("NotAuthorized", policy => //for after successful login user connot access register page & login page
+                {
+                    policy.RequireAssertion(context =>
+                    {
+                        return !context.User.Identity.IsAuthenticated; //"false" User cannot access action method where we use attribute Authorize["NotAuthenticated"], if "True" User can access
+                    });
+                });
             });
 
             service.ConfigureApplicationCookie(options =>
